@@ -20,17 +20,8 @@ object Day05 {
 
     fun secondStar(input: List<String>): Int = findNumberOfOverlappingLines(findLines(input))
 
-    private fun findNumberOfOverlappingLines(lines: List<Line>): Int {
-        val board = mutableMapOf<Point, Int>()
-
-        lines.forEach { points ->
-            points.forEach { point ->
-                board[point] = board.getOrDefault(point, 0) + 1
-            }
-        }
-
-        return board.count { (_, value) -> value > 1 }
-    }
+    private fun findNumberOfOverlappingLines(lines: List<Line>): Int =
+        lines.flatten().groupBy { it }.count { it.value.size > 1 }
 
     private fun findLines(input: List<String>): List<Line> =
         input.map { rawLine ->
